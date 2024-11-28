@@ -7,25 +7,16 @@ const config = {
   title: 'doc-as-a-code-workshop',
   tagline: 'Туториал',
   favicon: 'img/favicon.ico',
-  url: 'https://itikineva.github.com/',
+  url: 'https://itikineva.github.io/',
   baseUrl: 'doc-as-a-code-workshop',
   organizationName: 'itikineva', // Usually your GitHub org/user name.
   projectName: 'doc-as-a-code-workshop', // Usually your repo name.
   onBrokenLinks: 'warn',
   onBrokenMarkdownLinks: 'warn',
+  trailingSlash: false,
 //подключаем плагин для drawio
   plugins: [
-    ['drawio', {}],
-    [
-      '@docusaurus/plugin-pwa',
-      {
-        debug: false,
-        offlineModeActivationStrategies: ['appInstalled', 'standalone'],
-        injectManifestConfig: {
-          maximumFileSizeToCacheInBytes: 5000000,
-        },
-      },
-    ],
+    ['drawio', {}]
   ],
   presets: [
     [
