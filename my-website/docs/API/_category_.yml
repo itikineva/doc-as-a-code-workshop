@@ -1,0 +1,7 @@
+position: 3 # для сортировки папки в сайдбаре
+label: АПИ # название пункта меню в сайдбаре
+collapsible: true
+collapsed: true
+link:
+  type: generated-index
+  title: АПИ # Заголовок на странице

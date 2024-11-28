@@ -1,0 +1,7 @@
+position: 5 # для сортировки папки в сайдбаре
+label: Сценарии # название пункта меню в сайдбаре
+collapsible: true
+collapsed: true
+link:
+  type: generated-index
+  title: Сценарии # Заголовок на странице
