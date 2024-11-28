@@ -7,7 +7,7 @@ const config = {
   title: 'doc-as-a-code-workshop',
   tagline: 'Туториал',
   favicon: 'img/favicon.ico',
-  url: 'https://github.com/',
+  url: 'https://itikineva.github.com/',
   baseUrl: 'doc-as-a-code-workshop',
   organizationName: 'itikineva', // Usually your GitHub org/user name.
   projectName: 'doc-as-a-code-workshop', // Usually your repo name.
