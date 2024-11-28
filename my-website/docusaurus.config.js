@@ -10,7 +10,8 @@ const config = {
   url: 'https://itikineva.github.io/',
   baseUrl: 'doc-as-a-code-workshop',
   organizationName: 'itikineva', // Usually your GitHub org/user name.
-  projectName: 'itikineva.github.io', // Usually your repo name.
+  // projectName: 'itikineva.github.io', // Usually your repo name.
+  projectName: 'doc-as-a-code-workshop', // Usually your repo name.
   onBrokenLinks: 'warn',
   onBrokenMarkdownLinks: 'warn',
   trailingSlash: false,
