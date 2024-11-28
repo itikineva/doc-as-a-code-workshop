@@ -15,7 +15,18 @@ const config = {
   onBrokenMarkdownLinks: 'warn',
 //подключаем плагин для drawio
   plugins: [
-    ['drawio', {}]],
+    ['drawio', {}],
+    [
+      '@docusaurus/plugin-pwa',
+      {
+        debug: false,
+        offlineModeActivationStrategies: ['appInstalled', 'standalone'],
+        injectManifestConfig: {
+          maximumFileSizeToCacheInBytes: 5000000,
+        },
+      },
+    ],
+  ],
   presets: [
     [
       'classic',
