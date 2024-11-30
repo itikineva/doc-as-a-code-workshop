@@ -7,7 +7,7 @@
     "start": "docusaurus start",
     "build": "docusaurus build",
     "swizzle": "docusaurus swizzle",
-    "deploy": "GIT_USER=itikineva GIT_PASS=$DEPLOY_TOKEN docusaurus deploy",
+    "deploy": "dotenv -e .env docusaurus deploy",
     "clear": "docusaurus clear",
     "serve": "docusaurus serve",
     "write-translations": "docusaurus write-translations",
@@ -28,7 +28,8 @@
   },
   "devDependencies": {
     "@docusaurus/module-type-aliases": "3.6.3",
-    "@docusaurus/types": "3.6.3"
+    "@docusaurus/types": "3.6.3",
+    "dotenv-cli": "^7.4.4"
   },
   "browserslist": {
     "production": [
