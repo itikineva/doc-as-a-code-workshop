@@ -26,14 +26,14 @@
 1. Нажми кнопку Code и скопируй HTTPS-ссылку (она выглядит как `https://github.com/<username>/<repo>.git`).
 2. Открой терминал в vs code и выполни команду:
 
-```bash
-git clone https://github.com/<username>/<repo>.git
-```
+    ```bash
+    git clone https://github.com/<username>/<repo>.git
+    ```
 
 3. Убедись, что origin настроен правильно:
-```bash
-git remote -v
-```
+    ```bash
+    git remote -v
+    ```
 В ответе должно быть:
 ```bash
 origin  https://github.com/<username>/<repo>.git (fetch)
@@ -42,14 +42,14 @@ origin  https://github.com/<username>/<repo>.git (push)
 
 ## Установка Docusaurus
 1. В vs code в терминале выполни команду для установки docusaurus:
-```bash
-npx create-docusaurus@latest my-website classic
-```
+    ```bash
+    npx create-docusaurus@latest my-website classic
+    ```
 2. Перейди в папку с проектом docusaurus и установи зависимости:
-  ```bash
-   cd my-website
-   npm install
-  ```
+    ```bash
+    cd my-website
+    npm install
+    ```
 
 ## Настройка docusaurus.config.js
 > Это основной файл конфигурации docusaurus.
@@ -87,7 +87,7 @@ npx create-docusaurus@latest my-website classic
    npm install
   ```    
 ## Наполнение документацией
-1. В папке docs хранится документация для публикации
+1. В папке docs хранится документация для публикации на сайте.
     * папки с tutorials можете удалить
     * файл into.md не удаляйте (!) - можете переделать его содержимое под свой проект
 2. В папке docs создайте необходимые папки и md файлы для вашей документации (см примеры организации и оформления в репозитории)
@@ -101,26 +101,41 @@ npx create-docusaurus@latest my-website classic
    1. Создай ветку `gh-pages`
    2. В настройках GitHub Pages выбери ветку `gh-pages`
      ![alt text](./static/image.png)
-2. Создай токен для деплоя документации (см ниже инструкцию)     
-3. В файл package.json добавь команду для деплоя с токеном:
-```json
-"scripts": {
-  "deploy": "GIT_USER=username GIT_PASS=token docusaurus deploy"
-}
-```
-4. Запусти команду деплоя в терминале, запустится выгрузка всей документации в ветку `gh-pages` и билд:
-```bash
-npm run deploy
-```
-5. Если все прошло успешно - твой сайт станет доступен по адресу:
+2. Создай access токен для деплоя документации и добавь его в переменную окружения (см ниже инструкцию).
+
+3. Запусти команду деплоя в терминале, запустится выгрузка всей документации в ветку `gh-pages`:
+    ```bash
+    npm run deploy
+    ```
+4. Если все прошло успешно - твой сайт станет доступен по адресу:
 `https://<username>.github.io/<repository-name>/`
 
-##### Настройка токена
+##### Создание access токена и сохранение в переменной окружения
 1. Перейди в GitHub Settings → Developer settings → Personal access tokens [тут](https://github.com/settings/tokens)
 2. Нажми Generate new token.
-3. Включи права repo и workflow.
-4. Создай токен и скопируй его.
-![alt text](./static/image-1.png)
+3. Включи права repo.
+4. Нажми Generate token и скопируй токен (его можно увидеть только один раз).
+    ![alt text](./static/image-1.png)
+
+5. Создай файл .env в корне проекта (my-website) для сохранения в переменные окружения токен и пользователя для деплоя.
+6. Скопируй токен в файл.env в корне проекта в переменную DEPLOY_TOKEN + укажи переменную GIT_USER (имя пользователя на github).
+    ```
+    DEPLOY_TOKEN=`token`
+    GIT_USER=`username`
+    ```
+1. Настрой работу с переменными окружения .env. Установи библиотеку dotenv-cli
+   ```bash
+   npm install dotenv-cli --save-dev
+    ```
+
+2. Измени в package.json команду для деплоя с переменными окружения. При деплое будет использован пользователь и токен из переменной окружения:
+```json
+  "scripts": {
+    "deploy": "dotenv -e.env docusaurus deploy"
+    }
+  ```
+1. Добавь .env в исключения .gitignore, чтобы случайно не запушить токен в репозитриий.  
+
 ---
 ## Дополнительно
 
@@ -158,7 +173,7 @@ npm run deploy
 4. [OpenAPI (Swagger) Editor](https://marketplace.visualstudio.com/items?itemName=42Crunch.vscode-openapi)
 5. [PlantUML](https://marketplace.visualstudio.com/items?itemName=jebbs.plantuml)
 
-### Полезные ссылки на плагины, которые используются в проекте
+### Ссылки на плагины, которые используются в проекте
  - [docusaurus](https://docusaurus.io/)
  - [redoc для docusaurus](https://redocusaurus.vercel.app/)
  - [drawio для docusaurus](https://github.com/xiguaxigua/docusaurus-plugin-drawio)
