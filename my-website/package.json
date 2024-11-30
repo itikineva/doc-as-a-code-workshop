@@ -7,7 +7,7 @@
     "start": "docusaurus start",
     "build": "docusaurus build",
     "swizzle": "docusaurus swizzle",
-    "deploy": "GIT_USER=itikineva GIT_PASS=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 docusaurus deploy",
+    "deploy": "GIT_USER=itikineva docusaurus deploy",
     "clear": "docusaurus clear",
     "serve": "docusaurus serve",
     "write-translations": "docusaurus write-translations",

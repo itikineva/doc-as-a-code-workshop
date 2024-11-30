@@ -95,10 +95,12 @@ npx create-docusaurus@latest my-website classic
 4. Примеры для вывода API документации, диаграмм в drawio, plantuml также см в репозитории
 
 ## Настройка для деплоя документации в GitHub Pages
+> Подобнее можно почтитать [тут](https://docusaurus.io/docs/deployment)
+
 1. В github настрой GitHub Pages:
    1. Создай ветку `gh-pages`
    2. В настройках GitHub Pages выбери ветку `gh-pages`
-     ![alt text](image.png)
+     ![alt text](./static/image.png)
 2. Создай токен для деплоя документации (см ниже инструкцию)     
 3. В файл package.json добавь команду для деплоя с токеном:
 ```json
@@ -118,7 +120,7 @@ npm run deploy
 2. Нажми Generate new token.
 3. Включи права repo и workflow.
 4. Создай токен и скопируй его.
-![alt text](image-1.png)
+![alt text](./static/image-1.png)
 ---
 ## Дополнительно
 
@@ -147,3 +149,17 @@ npm run deploy
   git push origin <branch-name>
   ```
   * *тут пушим в ветку branch-name*
+
+### Полезные плагины для VS CODE для работы
+
+1. [Markdown All in One](https://marketplace.visualstudio.com/items?itemName=yzhang.markdown-all-in-one)
+2. [Markdown Table](https://marketplace.visualstudio.com/items?itemName=TakumiI.markdowntable)
+3. [Draw.io Integration](https://marketplace.visualstudio.com/items?itemName=hediet.vscode-drawio)
+4. [OpenAPI (Swagger) Editor](https://marketplace.visualstudio.com/items?itemName=42Crunch.vscode-openapi)
+5. [PlantUML](https://marketplace.visualstudio.com/items?itemName=jebbs.plantuml)
+
+### Полезные ссылки на плагины, которые используются в проекте
+ - [docusaurus](https://docusaurus.io/)
+ - [redoc для docusaurus](https://redocusaurus.vercel.app/)
+ - [drawio для docusaurus](https://github.com/xiguaxigua/docusaurus-plugin-drawio)
+ - [plantuml для docusaurus](https://github.com/akebifiky/remark-simple-plantuml)
