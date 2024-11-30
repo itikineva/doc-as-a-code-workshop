@@ -4,16 +4,15 @@ const simplePlantUML = require("@akebifiky/remark-simple-plantuml"); // объя
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
-  title: 'doc-as-a-code-workshop',
-  tagline: 'Туториал',
-  favicon: 'img/favicon.ico',
-  url: 'https://itikineva.github.io/',
-  baseUrl: 'doc-as-a-code-workshop',
-  organizationName: 'itikineva', // Usually your GitHub org/user name.
-  // projectName: 'itikineva.github.io', // Usually your repo name.
-  projectName: 'doc-as-a-code-workshop', // Usually your repo name.
-  onBrokenLinks: 'warn',
-  onBrokenMarkdownLinks: 'warn',
+  title: 'doc-as-a-code-workshop', //Название сайта на начальной странице
+  tagline: 'Туториал', // Описание сайта на начальной странице
+  favicon: 'img/favicon.ico', // Иконка сайта
+  url: 'https://itikineva.github.io/', // Адрес gitlab pages, обычно https://<username>.github.io
+  baseUrl: 'doc-as-a-code-workshop', // Базовый url, обычно название репозитория
+  organizationName: 'itikineva', // Имя GitHub пользователя
+  projectName: 'doc-as-a-code-workshop', // Имя репозитория
+  onBrokenLinks: 'warn', // Чтобы не падать при наличии неработающих ссылок
+  onBrokenMarkdownLinks: 'warn', // Чтобы не падать при наличии неработающих ссылок
   trailingSlash: false,
   deploymentBranch: 'gh-pages',
 
@@ -31,7 +30,7 @@ const config = {
           routeBasePath: 'docs',
           editUrl:
             'https://github.com/itikineva/doc-as-a-code-workshop',
-          remarkPlugins: [simplePlantUML],
+          remarkPlugins: [simplePlantUML], //подключаем плагин для plantuml
         },
         blog: false,
         theme: {
@@ -39,6 +38,7 @@ const config = {
         },
       }),
     ],
+    // подключаем плагин для OPENAPI
     [
       'redocusaurus',
       {
@@ -60,24 +60,21 @@ const config = {
     ({
       image: 'img/docusaurus-social-card.jpg',
       navbar: {
-        title: 'doc-as-a-code-workshop',
+        title: 'doc-as-a-code-workshop', //Название на навбаре
         logo: {
           alt: 'My Site Logo',
-          src: 'img/logo.svg',
+          src: 'img/logo.svg', //Логотип на навбаре
         },
+        // тут можно настроить элементы навбара
         items: [
-          //новый раздел в navbar
-          // {
-          //   label: 'api',
-          //   position: 'left',
-          // },
           {
-            href: 'https://github.com/facebook/docusaurus',
+            href: 'https://github.com/itikineva/doc-as-a-code-workshop',
             label: 'GitHub',
             position: 'right',
           },
         ],
       },
+      // тут можно настроить элементы футера
       footer: {
         style: 'dark',
         links: [
