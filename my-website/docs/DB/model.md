@@ -20,4 +20,3 @@ import diagram from '!!raw-loader!./model.drawio';
 | status   | enum    | Статус питомца        |
 | photo    | varchar | Фото                  |
 
-![alt text](image.png)

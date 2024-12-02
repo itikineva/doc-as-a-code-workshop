@@ -1,4 +1,4 @@
-position: 3 # для сортировки папки в сайдбаре
+position: 4 # для сортировки папки в сайдбаре
 label: ERD # название пункта меню в сайдбаре
 collapsible: true
 collapsed: true
