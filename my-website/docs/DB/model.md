@@ -19,3 +19,5 @@ import diagram from '!!raw-loader!./model.drawio';
 | name     | varchar | Имя питомца           |
 | status   | enum    | Статус питомца        |
 | photo    | varchar | Фото                  |
+
+![alt text](image.png)
