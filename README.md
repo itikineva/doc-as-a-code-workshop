@@ -15,8 +15,8 @@
   - [Настройка для деплоя документации в GitHub Pages](#настройка-для-деплоя-документации-в-github-pages)
         - [Создание access токена и сохранение в переменной окружения](#создание-access-токена-и-сохранение-в-переменной-окружения)
   - [Дополнительно для тех, кто делает вариант 1 ДЗ](#дополнительно-для-тех-кто-делает-вариант-1-дз)
-    - [Полезные плагины для VS CODE для работы](#полезные-плагины-для-vs-code-для-работы)
-    - [Ссылки на плагины, которые используются в проекте](#ссылки-на-плагины-которые-используются-в-проекте)
+  - [Полезные плагины для VS CODE для работы](#полезные-плагины-для-vs-code-для-работы)
+  - [Ссылки на плагины, которые используются в проекте](#ссылки-на-плагины-которые-используются-в-проекте)
 
 
 
@@ -206,7 +206,7 @@
 
 ---
 
-### Полезные плагины для VS CODE для работы
+## Полезные плагины для VS CODE для работы
 
 1. [Markdown All in One](https://marketplace.visualstudio.com/items?itemName=yzhang.markdown-all-in-one)
 2. [Markdown Table](https://marketplace.visualstudio.com/items?itemName=TakumiI.markdowntable)
@@ -214,7 +214,7 @@
 4. [OpenAPI (Swagger) Editor](https://marketplace.visualstudio.com/items?itemName=42Crunch.vscode-openapi)
 5. [PlantUML](https://marketplace.visualstudio.com/items?itemName=jebbs.plantuml)
 
-### Ссылки на плагины, которые используются в проекте
+## Ссылки на плагины, которые используются в проекте
  - [docusaurus](https://docusaurus.io/)
  - [redoc для docusaurus](https://redocusaurus.vercel.app/)
  - [drawio для docusaurus](https://github.com/xiguaxigua/docusaurus-plugin-drawio)
