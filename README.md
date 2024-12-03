@@ -29,6 +29,7 @@
 3. Установи git (если еще он не установлен)
     * [Windows](https://git-scm.com/downloads/win)
     * Для MacOS установка через терминал (возможно потребуется установка Homebrew)
+      ![alt text](./static/image-5.png)
       ```bash
         brew install git
       ```
