@@ -1,0 +1,525 @@
+openapi: 3.0.2
+info:
+  title: HeroTask API
+  description: |
+    API сервиса оперативного назначения супергероев на инциденты.
+
+    Позволяет диспетчерам регистрировать угрозы, управлять реестром супергероев
+    и назначать задачи в режиме реального времени.
+  version: 1.2.0
+  contact:
+    name: Команда HeroTask
+    email: support@herotask.io
+
+servers:
+  - url: https://api.herotask.io/v1
+    description: Production
+  - url: https://api-staging.herotask.io/v1
+    description: Staging
+
+tags:
+  - name: heroes
+    description: Управление реестром супергероев
+  - name: incidents
+    description: Регистрация и отслеживание инцидентов
+  - name: tasks
+    description: Назначение задач и отслеживание выполнения
+
+paths:
+  /heroes:
+    get:
+      tags: [heroes]
+      summary: Список супергероев
+      description: Возвращает список всех зарегистрированных супергероев с возможностью фильтрации по статусу.
+      operationId: listHeroes
+      parameters:
+        - name: status
+          in: query
+          description: Фильтр по статусу доступности
+          required: false
+          schema:
+            $ref: '#/components/schemas/HeroStatus'
+        - name: ability
+          in: query
+          description: Фильтр по способности (например, "flight", "strength")
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Список героев
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Hero'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+
+    post:
+      tags: [heroes]
+      summary: Зарегистрировать супергероя
+      operationId: createHero
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/HeroCreate'
+      responses:
+        '201':
+          description: Герой зарегистрирован
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Hero'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '409':
+          $ref: '#/components/responses/Conflict'
+
+  /heroes/{heroId}:
+    get:
+      tags: [heroes]
+      summary: Карточка супергероя
+      operationId: getHero
+      parameters:
+        - $ref: '#/components/parameters/HeroId'
+      responses:
+        '200':
+          description: Карточка героя
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Hero'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+    patch:
+      tags: [heroes]
+      summary: Обновить статус или данные героя
+      operationId: updateHero
+      parameters:
+        - $ref: '#/components/parameters/HeroId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/HeroUpdate'
+      responses:
+        '200':
+          description: Данные обновлены
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Hero'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  /incidents:
+    get:
+      tags: [incidents]
+      summary: Список инцидентов
+      operationId: listIncidents
+      parameters:
+        - name: status
+          in: query
+          required: false
+          schema:
+            $ref: '#/components/schemas/IncidentStatus'
+        - name: danger_level
+          in: query
+          description: Минимальный уровень опасности (1–5)
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 5
+      responses:
+        '200':
+          description: Список инцидентов
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Incident'
+
+    post:
+      tags: [incidents]
+      summary: Зарегистрировать инцидент
+      operationId: createIncident
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/IncidentCreate'
+      responses:
+        '201':
+          description: Инцидент зарегистрирован
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Incident'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+
+  /incidents/{incidentId}:
+    get:
+      tags: [incidents]
+      summary: Карточка инцидента
+      operationId: getIncident
+      parameters:
+        - $ref: '#/components/parameters/IncidentId'
+      responses:
+        '200':
+          description: Карточка инцидента
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Incident'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+    patch:
+      tags: [incidents]
+      summary: Обновить статус инцидента
+      operationId: updateIncident
+      parameters:
+        - $ref: '#/components/parameters/IncidentId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/IncidentUpdate'
+      responses:
+        '200':
+          description: Статус обновлён
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Incident'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  /tasks:
+    post:
+      tags: [tasks]
+      summary: Назначить задачу
+      description: Назначает доступного супергероя на зарегистрированный инцидент.
+      operationId: createTask
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TaskCreate'
+      responses:
+        '201':
+          description: Задача создана
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Task'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '409':
+          description: Герой недоступен (уже на задаче)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /tasks/{taskId}:
+    get:
+      tags: [tasks]
+      summary: Статус задачи
+      operationId: getTask
+      parameters:
+        - $ref: '#/components/parameters/TaskId'
+      responses:
+        '200':
+          description: Задача
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Task'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+    patch:
+      tags: [tasks]
+      summary: Обновить статус задачи
+      operationId: updateTask
+      parameters:
+        - $ref: '#/components/parameters/TaskId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TaskUpdate'
+      responses:
+        '200':
+          description: Задача обновлена
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Task'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+components:
+  parameters:
+    HeroId:
+      name: heroId
+      in: path
+      required: true
+      description: Идентификатор супергероя
+      schema:
+        type: integer
+        format: int64
+    IncidentId:
+      name: incidentId
+      in: path
+      required: true
+      description: Идентификатор инцидента
+      schema:
+        type: integer
+        format: int64
+    TaskId:
+      name: taskId
+      in: path
+      required: true
+      description: Идентификатор задачи
+      schema:
+        type: integer
+        format: int64
+
+  responses:
+    BadRequest:
+      description: Некорректный запрос
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: Ресурс не найден
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Conflict:
+      description: Конфликт — ресурс уже существует
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+
+  schemas:
+    HeroStatus:
+      type: string
+      enum: [available, on_mission, resting]
+      description: |
+        Статус доступности супергероя:
+        - `available` — готов к заданию
+        - `on_mission` — выполняет задание
+        - `resting` — восстанавливается, недоступен
+
+    Hero:
+      type: object
+      required: [id, name, status]
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 42
+        name:
+          type: string
+          example: "Молниеносный"
+        alias:
+          type: string
+          description: Настоящее имя (засекречено)
+          example: "Алексей Громов"
+        abilities:
+          type: array
+          items:
+            type: string
+          example: ["flight", "super_speed", "lightning"]
+        status:
+          $ref: '#/components/schemas/HeroStatus'
+        missions_count:
+          type: integer
+          description: Количество выполненных заданий
+          example: 137
+
+    HeroCreate:
+      type: object
+      required: [name, abilities]
+      properties:
+        name:
+          type: string
+          example: "Молниеносный"
+        alias:
+          type: string
+          example: "Алексей Громов"
+        abilities:
+          type: array
+          items:
+            type: string
+          example: ["flight", "super_speed"]
+
+    HeroUpdate:
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/HeroStatus'
+        abilities:
+          type: array
+          items:
+            type: string
+
+    IncidentStatus:
+      type: string
+      enum: [open, assigned, resolved, cancelled]
+      description: |
+        Статус инцидента:
+        - `open` — зарегистрирован, ожидает назначения
+        - `assigned` — герой назначен, задание выполняется
+        - `resolved` — угроза устранена
+        - `cancelled` — инцидент отменён
+
+    Incident:
+      type: object
+      required: [id, title, danger_level, status]
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 7
+        title:
+          type: string
+          example: "Ограбление банка в центре города"
+        description:
+          type: string
+          example: "Вооружённые грабители захватили заложников"
+        danger_level:
+          type: integer
+          minimum: 1
+          maximum: 5
+          description: Уровень опасности от 1 (низкий) до 5 (критический)
+          example: 4
+        location:
+          type: string
+          example: "ул. Центральная, 15"
+        status:
+          $ref: '#/components/schemas/IncidentStatus'
+        created_at:
+          type: string
+          format: date-time
+          example: "2024-03-15T14:32:00Z"
+
+    IncidentCreate:
+      type: object
+      required: [title, danger_level]
+      properties:
+        title:
+          type: string
+          example: "Пожар на химическом заводе"
+        description:
+          type: string
+        danger_level:
+          type: integer
+          minimum: 1
+          maximum: 5
+          example: 3
+        location:
+          type: string
+          example: "Промзона, Северный район"
+
+    IncidentUpdate:
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/IncidentStatus'
+        description:
+          type: string
+
+    TaskStatus:
+      type: string
+      enum: [active, completed, failed]
+      description: |
+        Статус задачи:
+        - `active` — герой работает над заданием
+        - `completed` — задание успешно выполнено
+        - `failed` — задание не выполнено
+
+    Task:
+      type: object
+      required: [id, hero_id, incident_id, status]
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 99
+        hero_id:
+          type: integer
+          format: int64
+          example: 42
+        incident_id:
+          type: integer
+          format: int64
+          example: 7
+        status:
+          $ref: '#/components/schemas/TaskStatus'
+        assigned_at:
+          type: string
+          format: date-time
+          example: "2024-03-15T14:35:00Z"
+        completed_at:
+          type: string
+          format: date-time
+          nullable: true
+          example: null
+        notes:
+          type: string
+          description: Комментарий по итогам задания
+          example: "Угроза нейтрализована, заложники освобождены"
+
+    TaskCreate:
+      type: object
+      required: [hero_id, incident_id]
+      properties:
+        hero_id:
+          type: integer
+          format: int64
+          example: 42
+        incident_id:
+          type: integer
+          format: int64
+          example: 7
+
+    TaskUpdate:
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/TaskStatus'
+        notes:
+          type: string
+
+    Error:
+      type: object
+      required: [code, message]
+      properties:
+        code:
+          type: string
+          example: "HERO_NOT_AVAILABLE"
+        message:
+          type: string
+          example: "Герой недоступен: статус on_mission"

@@ -1,36 +1,68 @@
 ---
 title: Архитектура
-hide_table_of_contents: true
+sidebar_position: 1
+description: Контекстная (C1) и контейнерная (C2) диаграммы системы HeroTask
+hide_table_of_contents: false
 ---
 
-# Архитектура
+## C1 — Контекстная диаграмма
 
-:::note
-Тут описываем архитектуру продукта
-:::
+Диаграмма показывает систему HeroTask в окружении внешних участников и сервисов.
 
-## C1
+```plantuml
+@startuml
+!define RECTANGLE class
 
-:::note
+actor "Диспетчер" as dispatcher
+actor "Супергерой" as hero
 
-Тут будет диаграмма C1
+rectangle "HeroTask System" as herotask {
+}
 
-:::
+rectangle "Alert Service\n(внешний)" as alert
+rectangle "Map API\n(внешний)" as maps
+rectangle "Notification Service\n(внешний)" as notify
 
-## C2
+dispatcher --> herotask : регистрирует инциденты,\nназначает героев
+hero --> herotask : обновляет статус задачи
+alert --> herotask : входящие сигналы об угрозах
+herotask --> maps : геолокация инцидентов
+herotask --> notify : push-уведомления герою
 
-:::note
+@enduml
+```
 
-Тут будет диаграмма C2
+## C2 — Контейнерная диаграмма
 
-:::
+Диаграмма раскрывает внутренние компоненты системы HeroTask и их взаимодействие.
+
+```plantuml
+@startuml
+actor "Диспетчер" as dispatcher
+
+rectangle "Frontend\n[React 18]" as frontend
+rectangle "Backend API\n[Spring Boot 3]" as backend
+database "PostgreSQL 15\n[основное хранилище]" as db
+rectangle "Redis 7\n[кэш, сессии]" as redis
+rectangle "Kafka 3\n[очередь событий]" as kafka
+rectangle "Notification Worker\n[Spring Boot]" as worker
+
+dispatcher --> frontend : HTTPS
+frontend --> backend : REST API
+backend --> db : SQL
+backend --> redis : кэширование\nстатусов
+backend --> kafka : события\n(task_assigned, task_done)
+kafka --> worker : подписка
+worker --> dispatcher : push-уведомления
+
+@enduml
+```
 
 ## Внешние зависимости
 
-:::note
-Тут будет табличка с описанием интеграций
-:::
-
 | Сервис | Тип интеграции | Описание |
 | ------ | -------------- | -------- |
-| 1      | 2              |          |
+| Alert Service | REST (входящий) | Автоматическая передача сигналов о новых угрозах |
+| Map API (Yandex Maps) | REST (исходящий) | Геолокация и маршруты к инцидентам |
+| Notification Service | Kafka (исходящий) | Push-уведомления на устройства супергероев |
+| Yandex Cloud S3 | SDK (исходящий) | Хранение фотографий профилей героев |

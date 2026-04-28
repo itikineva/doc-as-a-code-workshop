@@ -1,25 +1,36 @@
 import { themes as prismThemes } from 'prism-react-renderer';
 
-const simplePlantUML = require("@akebifiky/remark-simple-plantuml"); // объявляем плагин для plantuml
+const simplePlantUML = require("@akebifiky/remark-simple-plantuml");
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
-  title: 'doc-as-a-code-workshop', //Название сайта на начальной странице
-  tagline: 'Туториал', // Описание сайта на начальной странице
-  favicon: 'img/favicon.ico', // Иконка сайта
-  url: 'https://itikineva.github.io/', // Адрес gitlab pages, обычно https://<username>.github.io
-  baseUrl: 'doc-as-a-code-workshop', // Базовый url, обычно название репозитория
-  organizationName: 'itikineva', // Имя GitHub пользователя
-  projectName: 'doc-as-a-code-workshop', // Имя репозитория
-  onBrokenLinks: 'warn', // Чтобы не падать при наличии неработающих ссылок
-  onBrokenMarkdownLinks: 'warn', // Чтобы не падать при наличии неработающих ссылок
+  title: 'HeroTask',
+  tagline: 'Пример технической документации — воркшоп Doc as Code',
+  favicon: 'img/favicon.ico',
+  url: 'https://itikineva.github.io',
+  baseUrl: '/doc-as-a-code-workshop/',
+  organizationName: 'itikineva',
+  projectName: 'doc-as-a-code-workshop',
+  onBrokenLinks: 'warn',
+  onBrokenMarkdownLinks: 'warn',
   trailingSlash: false,
   deploymentBranch: 'gh-pages',
 
-//подключаем плагин для drawio
   plugins: [
-    ['drawio', {}]
+    ['drawio', {}],
+    // Второй docs instance для Style Guide
+    [
+      '@docusaurus/plugin-content-docs',
+      {
+        id: 'style-guide',
+        path: 'style-guide',
+        routeBasePath: 'style-guide',
+        sidebarPath: require.resolve('./sidebars-style-guide.js'),
+        remarkPlugins: [simplePlantUML],
+      },
+    ],
   ],
+
   presets: [
     [
       'classic',
@@ -29,8 +40,8 @@ const config = {
           sidebarPath: './sidebars.js',
           routeBasePath: 'docs',
           editUrl:
-            'https://github.com/itikineva/doc-as-a-code-workshop',
-          remarkPlugins: [simplePlantUML], //подключаем плагин для plantuml
+            'https://github.com/itikineva/doc-as-a-code-workshop/edit/main/my-website/',
+          remarkPlugins: [simplePlantUML],
         },
         blog: false,
         theme: {
@@ -38,14 +49,13 @@ const config = {
         },
       }),
     ],
-    // подключаем плагин для OPENAPI
     [
       'redocusaurus',
       {
         specs: [
           {
-            id: 'petstore',
-            spec: 'api_specs/openapi.yaml',
+            id: 'herotask',
+            spec: 'api_specs/herotask-openapi.yaml',
           },
         ],
         theme: {
@@ -60,13 +70,28 @@ const config = {
     ({
       image: 'img/docusaurus-social-card.jpg',
       navbar: {
-        title: 'doc-as-a-code-workshop', //Название на навбаре
+        title: 'HeroTask',
         logo: {
-          alt: 'My Site Logo',
-          src: 'img/logo.svg', //Логотип на навбаре
+          alt: 'HeroTask Logo',
+          src: 'img/logo.svg',
         },
-        // тут можно настроить элементы навбара
         items: [
+          {
+            type: 'doc',
+            docId: 'intro',
+            position: 'left',
+            label: 'Документация',
+          },
+          {
+            to: '/docs/api/herotask',
+            label: 'API',
+            position: 'left',
+          },
+          {
+            to: '/style-guide/',
+            label: 'Style Guide',
+            position: 'left',
+          },
           {
             href: 'https://github.com/itikineva/doc-as-a-code-workshop',
             label: 'GitHub',
@@ -74,51 +99,41 @@ const config = {
           },
         ],
       },
-      // тут можно настроить элементы футера
       footer: {
         style: 'dark',
         links: [
           {
-            title: 'Docs',
+            title: 'Документация',
             items: [
               {
-                label: 'Docs',
-                to: '/docs/',
+                label: 'Карточка сервиса',
+                to: '/docs/intro',
+              },
+              {
+                label: 'Архитектура',
+                to: '/docs/arch',
+              },
+              {
+                label: 'API Reference',
+                to: '/docs/api/herotask',
               },
             ],
           },
           {
-            title: 'Community',
+            title: 'Для авторов',
             items: [
               {
-                label: 'Stack Overflow',
-                href: 'https://stackoverflow.com/questions/tagged/docusaurus',
+                label: 'Style Guide',
+                to: '/style-guide/',
               },
               {
-                label: 'Discord',
-                href: 'https://discordapp.com/invite/docusaurus',
-              },
-              {
-                label: 'X',
-                href: 'https://x.com/docusaurus',
-              },
-            ],
-          },
-          {
-            title: 'More',
-            items: [
-              {
-                label: 'Blog',
-                to: '/blog',
-              },
-              {
-                label: 'GitHub',
-                href: 'https://github.com/facebook/docusaurus',
+                label: 'Репозиторий',
+                href: 'https://github.com/itikineva/doc-as-a-code-workshop',
               },
             ],
           },
         ],
-        copyright: `Copyright © ${new Date().getFullYear()} My Project, Inc. Built with Docusaurus.`,
+        copyright: `Copyright © ${new Date().getFullYear()} HeroTask. Built with Docusaurus.`,
       },
       prism: {
         theme: prismThemes.github,
