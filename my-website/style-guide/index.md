@@ -17,6 +17,7 @@ description: Руководство по оформлению техническ
 | [Структура документа](/style-guide/structure) | Front matter, заголовки, имена файлов |
 | [Форматирование и типографика](/style-guide/typography) | Шрифты, списки, таблицы, вкладки, инфоплашки |
 | [Диаграммы](/style-guide/diagrams) | PlantUML и draw.io — когда что использовать |
+| [API-документация (Redocusaurus)](/style-guide/api) | Как встроить OpenAPI-спецификацию на страницу |
 
 ## Зачем нужен style guide
 
