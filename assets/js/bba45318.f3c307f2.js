@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkmy_website=self.webpackChunkmy_website||[]).push([[447],{109:e=>{e.exports=JSON.parse('{"tags":[{"label":"\u041e\u0444\u043e\u0440\u043c\u043b\u0435\u043d\u0438\u0435","permalink":"/doc-as-a-code-workshop/style-guide/tags/\u043e\u0444\u043e\u0440\u043c\u043b\u0435\u043d\u0438\u0435","count":1}]}')}}]);
