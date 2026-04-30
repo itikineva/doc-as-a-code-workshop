@@ -219,12 +219,10 @@ on:
     branches: [main]
 
 permissions:
-  contents: read
-  pages: write
-  id-token: write
+  contents: write
 
 jobs:
-  build:
+  deploy:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -243,28 +241,18 @@ jobs:
         run: npm run build
         working-directory: my-website
 
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: my-website/build
-
-  deploy:
-    runs-on: ubuntu-latest
-    needs: build
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    steps:
       - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: my-website/build
 ```
 
-> Токены и пароли не нужны — GitHub Actions использует встроенный механизм аутентификации.
+> Токены и пароли не нужны — GitHub Actions использует встроенный `GITHUB_TOKEN`.
 
 ### 2.6 Настроить GitHub Pages
 
-В настройках репозитория: **Settings → Pages → Build and deployment → Source** → выбери **GitHub Actions**.
+После первого пуша (шаг 2.7) workflow создаст ветку `gh-pages`. Затем в настройках репозитория: **Settings → Pages → Source** → выбери ветку `gh-pages`, папку `/ (root)`.
 
 ### 2.7 Запушить
 
