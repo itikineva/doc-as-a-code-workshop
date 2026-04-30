@@ -252,7 +252,7 @@ jobs:
 
 ### 2.6 Настроить GitHub Pages
 
-После первого пуша (шаг 2.7) workflow создаст ветку `gh-pages`. Затем в настройках репозитория: **Settings → Pages → Source** → выбери ветку `gh-pages`, папку `/ (root)`.
+Затем в настройках репозитория: **Settings → Pages → Source** → выбери ветку `gh-pages`(или `main`), папку `/ (root)`.
 
 ### 2.7 Запушить
 
