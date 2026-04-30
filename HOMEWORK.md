@@ -142,7 +142,6 @@ cd my-website
 Проверь, что всё работает локально:
 
 ```bash
-npm run start
 ```
 
 Откроется браузер с `http://localhost:3000/`.
